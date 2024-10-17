@@ -14,7 +14,7 @@ const app = express();
 connectDB()
 // Middleware to enable CORS
 const corsOptions = {
-  origin: 'https://www.streamhub.today/',
+  origin: 'https://www.streamhub.today',
   optionsSuccessStatus: 200,
   credentials: true
 };
