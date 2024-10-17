@@ -4,7 +4,7 @@ import { UserDocument } from "../../model/userModel"
 import { ChannelDocument } from "../../model/channelModel";
 
 export interface IuserInteractor{
-    isAdmin(email: string,password:string):Promise<string|Boolean>
+    isAdmin(email: string):Promise<string|Boolean>
     isUser(email: string,password:string): Promise<string|Boolean>
     jwt(payload: User): string | Promise<string>;
     refresh(payload: User): string | Promise<string>;

@@ -120,59 +120,51 @@ export class UserController {
       if (!email || !password) {
         return res.status(ResponseStatus.BadRequest).json({ message: 'Email and password are required' });
       }
-
-      console.log("uszzzzzzzzzzzz",email);
+  
       const userdata = await this._interactor.userData(email);
-     
       
       if (!userdata) {
         return res.status(ResponseStatus.Unauthorized).json({ message: "Invalid email or password" });
       }
-
+  
       if (userdata.isblocked) {
         return res.status(ResponseStatus.Unauthorized).json({ message: "This user is blocked. Please contact @Admin" });
       }
-
-      let isPasswordValid;
-      const isAdmin = await this._interactor.isAdmin(email,password);
-
-      if (isAdmin && password === "admin@123") {
-        isPasswordValid = true;
-      } else if (userdata.password.startsWith('$2b$') || userdata.password.startsWith('$2a$')) {
-        // Password is already hashed
+  
+      const isAdmin = await this._interactor.isAdmin(email);
+  
+      let isPasswordValid = false;
+      if (userdata.password.startsWith('$2b$') || userdata.password.startsWith('$2a$')) {
+        // Password is hashed
         isPasswordValid = await comparePassword(password, userdata.password);
       } else {
-        // Password is still in plain text
+        // Password is still in plain text (this should be temporary)
         isPasswordValid = password === userdata.password;
         if (isPasswordValid) {
           // If login is successful, hash the password and update the user record
           const hashedPassword = await hashPassword(password);
-          userdata.password=hashedPassword
-          console.log("userdata",userdata);
-          
+          userdata.password = hashedPassword;
           await this._interactor.updateUser(userdata);
         }
       }
-
+  
       if (!isPasswordValid) {
         return res.status(ResponseStatus.Unauthorized).json({ message: "Invalid email or password" });
       }
-console.log("tilll here");
-
+  
       const token = await this._interactor.jwt(userdata);
       const refreshToken = await this._interactor.refresh(userdata);
       const channel = await this._interactor.showChannel(userdata);
-
+  
       if (isAdmin) {
         return res.status(ResponseStatus.OK).json({ message: "Admin", token, userdata, channel });
       }
-
+  
       res.status(ResponseStatus.OK).json({ message: "Login Successful", token, refreshToken, userdata, channel });
     } catch (error) {
       res.status(ResponseStatus.BadRequest).json({ message: "An error occurred during login", error });
     }
   }
-  
     // ... other methods remain the same
   
 

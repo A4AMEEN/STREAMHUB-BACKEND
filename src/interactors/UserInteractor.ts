@@ -40,10 +40,10 @@ export class userInteractor implements IuserInteractor{
   }
   
 
-  async isAdmin(email:string,password:string): Promise<string|Boolean>{
+  async isAdmin(email:string): Promise<string|Boolean>{
     try {
       
-      return await this._repository.isAdmin(email,password)
+      return await this._repository.isAdmin(email)
     } catch (error) {
       throw new Error("Method not implemented.");
     }

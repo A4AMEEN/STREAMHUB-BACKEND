@@ -24,7 +24,7 @@ export interface IuserRepository{
     verifyOtp(otp: number): string | Boolean | PromiseLike<string | Boolean>;
     jwt(payload: User): string | Promise<string>;
     refresh(payload: User): string | Promise<string>;
-    isAdmin(email: string,password:string):Promise<string|Boolean>;
+    isAdmin(email: string):Promise<string|Boolean>;
     isUser(email: string,password:string):Promise<string|Boolean>
     mailExist(email:string):Promise<User|boolean>
     userData(email:string):Promise<User>

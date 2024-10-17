@@ -164,21 +164,13 @@ dotenv.config();
         throw error;
       }
     };
-    async isAdmin(email: string,password:string): Promise<string | Boolean> {
+    async isAdmin(email: string): Promise<boolean> {
       try {
-
-        const admin = await UserModel.findOne({ email: email, password: password, role: "admin" });
-    if (admin) {
-      console.log("User is an Admin:", admin.role);
-      return true;
-    }
-       
-       
-        return false
-
-        
+        const admin = await UserModel.findOne({ email: email, role: "admin" });
+        return !!admin; // Returns true if admin is found, false otherwise
       } catch (error) {
-        throw new Error("Internal Server error");
+        console.error("Error checking admin status:", error);
+        return false;
       }
     }
    
