@@ -14,7 +14,7 @@ const s3config = new S3Client({
     accessKeyId: process.env.S3_ACCESS_KEY || '',
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
   },
-  region:'ap-southeast-2',
+  region: process.env.S3_REGION || '',
 });
 
 

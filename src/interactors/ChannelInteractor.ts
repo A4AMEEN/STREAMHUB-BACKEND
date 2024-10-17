@@ -13,8 +13,8 @@ export class channelInteractor implements IChannelInteractor {
   constructor(private repository: IChannelRepository) {
     this._repository = repository;
     this.razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET
+      key_id: process.env.RAZORPAY_KEY_ID as string,
+      key_secret: process.env.RAZORPAY_KEY_SECRET as string
     });
   }
  
