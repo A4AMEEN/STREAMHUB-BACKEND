@@ -38,12 +38,16 @@ export class UserController {
         email: req.body.email ? req.body.email.trim() : null,
         password: req.body.password ? req.body.password.trim() : null,
       };
+      console.log("camerd",user);
+      
 
       if (!user.password || !user.email) {
         return res.status(ResponseStatus.BadRequest).json({ message: "password or email is required" });
       }
 
       const isMailExist = await this._interactor.mailExist(user.email);
+      console.log("isMailEXist",isMailExist);
+      
 
       if (isMailExist) {
         return res.status(ResponseStatus.BadRequest).json({ message: "Mail already Exists please Login" });
