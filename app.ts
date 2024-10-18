@@ -44,8 +44,7 @@ app.unsubscribe('/api/live',liveRoutes)
 
 
 
-
-app.use('/', createProxyMiddleware({ target: "https://www.streamhub.today", changeOrigin: true, 
+app.use('/', createProxyMiddleware({ target: 'https://www.streamhub.today', changeOrigin: true, 
   pathRewrite: {'^/uploads': '/uploads' 
 } }));
 
